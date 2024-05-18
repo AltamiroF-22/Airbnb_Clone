@@ -10,6 +10,8 @@ import UserRegisterModal from "@/app/hooks/UserRegisterModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../Inputs/Input";
+import toast from "react-hot-toast";
+import Button from "../Button";
 
 const RegisterModal = () => {
   const registerModal = UserRegisterModal();
@@ -36,7 +38,7 @@ const RegisterModal = () => {
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log(error);
+        toast.error("Something went wrong.");
       })
       .finally(() => {
         setIsLoading(false);
@@ -44,11 +46,12 @@ const RegisterModal = () => {
   };
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       <Heading title="Welcome to Airbnb" subTitle="Create an account" />
       <Input
         id="email"
         label="Email"
+        type="e-mail"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -74,6 +77,36 @@ const RegisterModal = () => {
     </div>
   );
 
+  const footerContent = (
+    <div className="flex flex-col gap-3 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        icon={FcGoogle}
+        onClick={() => {}}
+      />
+
+      <Button
+        outline
+        label="Continue with Github"
+        icon={AiFillGithub}
+        onClick={() => {}}
+      />
+      <div className="text-neutral-500 text-center mt-4 font-light">
+        <div className=" flex flex-row justify-center gap-2">
+          <div className="">Already have an Account?</div>
+          <div
+            onClick={registerModal.onClose}
+            className=" text-neutral-800 cursor-pointer hover:underline"
+          >
+            Log in
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <Modal
       disabled={isLoading}
@@ -83,6 +116,7 @@ const RegisterModal = () => {
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
+      footer={footerContent}
     />
   );
 };
