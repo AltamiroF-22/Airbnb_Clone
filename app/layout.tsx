@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar/Navbar";
 import RegisterModal from "./components/Modals/RegisterModal";
+import ToastProvider from "./providers/ToastPropvider";
 
 export const metadata: Metadata = {
   title: "Airbnb",
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
+        <ToastProvider />
         <RegisterModal />
         <Navbar />
         {children}
