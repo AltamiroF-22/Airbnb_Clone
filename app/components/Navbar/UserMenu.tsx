@@ -7,8 +7,14 @@ import { useState } from "react";
 
 import UserRegisterModal from "@/app/hooks/UserRegisterModal";
 import UserLoginModal from "@/app/hooks/UserLoginModal";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
-const UserMenu = () => {
+interface UserMenuProps {
+  currentUser?: User | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = UserRegisterModal();
   const loginModal = UserLoginModal();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,12 +43,38 @@ const UserMenu = () => {
       </div>
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white overflow-hidden right-0 top-12 text-sm">
-          <div className="flex flex-col cursor-pointer">
-            <MenuItem onClick={loginModal.onOPen} label="Login" />
-          </div>
-          <div className="flex flex-col cursor-pointer">
-            <MenuItem onClick={registerModal.onOPen} label="Sign up" />
-          </div>
+          {!currentUser && (
+            <>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={loginModal.onOPen} label="Login" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={registerModal.onOPen} label="Sign up" />
+              </div>
+            </>
+          )}
+          {currentUser && (
+            <>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => {}} label="My trips" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => {}} label="My favorites" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => {}} label="My reservations" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => {}} label="My properties" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => {}} label="Airbnb my home" />
+              </div>
+              <div className="flex flex-col cursor-pointer">
+                <MenuItem onClick={() => signOut()} label="logout" />
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
