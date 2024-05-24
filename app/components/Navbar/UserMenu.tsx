@@ -7,11 +7,11 @@ import { useState } from "react";
 
 import UserRegisterModal from "@/app/hooks/UserRegisterModal";
 import UserLoginModal from "@/app/hooks/UserLoginModal";
-import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
+import { SafeUser } from "@/app/types";
 
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
@@ -70,6 +70,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               <div className="flex flex-col cursor-pointer">
                 <MenuItem onClick={() => {}} label="Airbnb my home" />
               </div>
+              <hr />
               <div className="flex flex-col cursor-pointer">
                 <MenuItem onClick={() => signOut()} label="logout" />
               </div>
